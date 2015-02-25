@@ -6,6 +6,16 @@ use Imagine\Gd\Imagine,
 
 require __DIR__.'/vendor/autoload.php';
 
+function fontBaseline(Font $font, $title) {
+	if (!preg_match("/[gjpqy]/", $title)) {
+		return 0;
+	}
+
+	$o = $font->box('o');
+	$y = $font->box('y');
+	return $y->getHeight() - $o->getHeight();
+}
+
 $words = require __DIR__.'/words.php';
 shuffle($words['adjectives']);
 shuffle($words['nouns']);
@@ -32,20 +42,22 @@ $fonts = require __DIR__.'/fonts.php';
 shuffle($fonts);
 $titleFontParams = current($fonts);
 $titleFont = new Font(__DIR__.'/fonts/'.$titleFontParams[0], $titleFontParams[1], $titleColor);
+$titleBaseline = fontBaseline($titleFont, $title);
 $titleBox = $titleFont->box($title);
 
 $titleMarginHorizontal = $baseWidth * .125;
-$titleMarginVertical = ($baseHeight / 2) - ($titleBox->getHeight() / 2);
+$titleMarginVertical = ($baseHeight / 2) - (($titleBox->getHeight() - $titleBaseline) / 2);
 $titlePosition = new Point($baseWidth + $titleMarginHorizontal, $titleMarginVertical);
 
 // Slogan
 $slogan = current($words['slogans']);
 $sloganColor = $backgroundColor->lighten(100);
 $sloganFont = new Font(__DIR__.'/fonts/'.$titleFontParams[0], (integer)($titleFontParams[1] * .5), $sloganColor);
+$sloganBaseline = fontBaseline($sloganFont, $slogan);
 $sloganBox = $sloganFont->box($slogan);
 
 $sloganLeft = $titlePosition->getX() + (($titleBox->getWidth() - $sloganBox->getWidth()) / 2);
-$sloganTop = $baseHeight - ($titleMarginVertical / 8) - $sloganBox->getHeight();
+$sloganTop = $baseHeight - ($titleMarginVertical / 4) - $sloganBox->getHeight() + $sloganBaseline;
 $sloganPosition = new Point($sloganLeft, $sloganTop);
 
 // Create banner and save

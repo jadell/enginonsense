@@ -53,7 +53,7 @@ return [
 
 	'nouns' => [
 		'dampers',
-		'data systems',
+		'data',
 		'datology',
 		'decisions',
 		'deployment',
@@ -80,6 +80,9 @@ return [
 	],
 
 	'slogans' => [
-		'Proving the impossible, possible',
+		'Seeing the future tomorrow',
+		'Proving the impossible possible',
+		'Pushing the edges of infinity',
+		'Tomorrow\'s innovations yesterday',
 	]
 ];
