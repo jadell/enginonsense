@@ -9,9 +9,10 @@ require __DIR__.'/vendor/autoload.php';
 $words = require __DIR__.'/words.php';
 shuffle($words['adjectives']);
 shuffle($words['nouns']);
+shuffle($words['slogans']);
 $title = sprintf('JAD %s %s',
-	ucwords(next($words['adjectives'])),
-	ucwords(next($words['nouns']))
+	ucwords(current($words['adjectives'])),
+	ucwords(current($words['nouns']))
 );
 
 // Base logo
@@ -24,23 +25,33 @@ $baseWidth = $base->getSize()->getWidth();
 // Title color
 $upperLeft = new Point(0,0);
 $backgroundColor = $base->getColorAt($upperLeft);
-$titleColor = $backgroundColor->lighten(100);
+$titleColor = $backgroundColor->lighten(175);
 
 // Title font
 $fonts = require __DIR__.'/fonts.php';
 shuffle($fonts);
-$titleFont = next($fonts);
-$titleFont = new Font(__DIR__.'/fonts/'.$titleFont[0], $titleFont[1], $titleColor);
+$titleFontParams = current($fonts);
+$titleFont = new Font(__DIR__.'/fonts/'.$titleFontParams[0], $titleFontParams[1], $titleColor);
 $titleBox = $titleFont->box($title);
-echo $titleFont->getFile().PHP_EOL;
 
 $titleMarginHorizontal = $baseWidth * .125;
 $titleMarginVertical = ($baseHeight / 2) - ($titleBox->getHeight() / 2);
 $titlePosition = new Point($baseWidth + $titleMarginHorizontal, $titleMarginVertical);
+
+// Slogan
+$slogan = current($words['slogans']);
+$sloganColor = $backgroundColor->lighten(100);
+$sloganFont = new Font(__DIR__.'/fonts/'.$titleFontParams[0], (integer)($titleFontParams[1] * .5), $sloganColor);
+$sloganBox = $sloganFont->box($slogan);
+
+$sloganLeft = $titlePosition->getX() + (($titleBox->getWidth() - $sloganBox->getWidth()) / 2);
+$sloganTop = $baseHeight - ($titleMarginVertical / 8) - $sloganBox->getHeight();
+$sloganPosition = new Point($sloganLeft, $sloganTop);
 
 // Create banner and save
 $bannerWidth = $baseWidth + ($titleMarginHorizontal * 2) + $titleBox->getWidth();
 $banner = $imagine->create(new Box($bannerWidth, $baseHeight), $backgroundColor);
 $banner->paste($base, $upperLeft);
 $banner->draw()->text($title, $titleFont, $titlePosition);
+$banner->draw()->text($slogan, $sloganFont, $sloganPosition);
 $banner->save('banner.png');

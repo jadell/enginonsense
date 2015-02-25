@@ -78,4 +78,8 @@ return [
 		'dynamics',
 		'dynamos',
 	],
+
+	'slogans' => [
+		'Proving the impossible, possible',
+	]
 ];
