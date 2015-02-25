@@ -66,4 +66,4 @@ $banner = $imagine->create(new Box($bannerWidth, $baseHeight), $backgroundColor)
 $banner->paste($base, $upperLeft);
 $banner->draw()->text($title, $titleFont, $titlePosition);
 $banner->draw()->text($slogan, $sloganFont, $sloganPosition);
-$banner->save('banner.png');
+$banner->show('png');
