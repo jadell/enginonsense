@@ -1,5 +1,5 @@
 <?php
 return [
-	['xolonium/Xolonium-Regular.otf', 18],
-	['karla-bold-stencil/Karla_BoldStencil.otf', 18],
+	['xolonium/Xolonium-Regular.otf', 16],
+	['karla-bold-stencil/Karla_BoldStencil.otf', 16],
 ];
