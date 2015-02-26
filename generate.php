@@ -27,7 +27,7 @@ $title = sprintf('JAD %s %s',
 
 // Base logo
 $imagine = new Imagine();
-$base = $imagine->open('base.png');
+$base = $imagine->open('images/JAD-v2.png');
 $base = $base->resize($base->getSize()->scale(.5));
 $baseHeight = $base->getSize()->getHeight();
 $baseWidth = $base->getSize()->getWidth();
