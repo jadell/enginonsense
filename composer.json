@@ -1,5 +1,7 @@
 {
     "require": {
+        "php": "~5.5.0",
+        "ext-gd": "*",
         "imagine/imagine": "~0.6.0"
     }
 }
